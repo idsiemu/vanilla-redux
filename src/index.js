@@ -15,7 +15,7 @@ const del = 'DELETE_TODO';
 const reducer = (state = [], action) => {
     switch(action.type){
         case add:
-            return [];
+            return [...state, {text: action.text}];
         case del:
             return [];
         default:
@@ -29,8 +29,10 @@ const onSubmit = e => {
     e.preventDefault();
     const toDo = input.value;
     input.value = "";
-    ulStore.dispatch({type:add, text: toDo});
+    ulStore.dispatch({type:add, text: toDo, id: Date.now()});
 }
+
+ulStore.subscribe(() => console.log(ulStore.getState()));
 
 form.addEventListener('submit', onSubmit);
 
